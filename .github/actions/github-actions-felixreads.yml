@@ -1,0 +1,31 @@
+name: Run felixreads
+on:
+  schedule:
+    - cron: '6 */4 * * *'
+  workflow_dispatch: # This allows manual triggering
+jobs:
+  run-scripts:
+    name: Run felixreads script
+    runs-on: ubuntu-latest
+    env:
+      OPENAI_KEY: ${{ secrets.OPENAI_KEY }}
+      GH_KEY: ${{ secrets.GH_KEY }}
+      MISTRAL_API_KEY: ${{ secrets.MISTRAL_API_KEY }}
+    steps:
+      # Step 1: Checkout the repository
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: setup-ffmpeg
+        uses: FedericoCarboni/setup-ffmpeg@v2
+      # Step 2: Setup Python
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.11.x'
+      # Step 3: Install dependencies if any (uncomment if needed)
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+     
+      # Step 4: Run the Python script
+      - name: Run felixreads
+        run: python -c 'from felix_reads import run; import datetime; run(datetime.timedelta(days=1))'
