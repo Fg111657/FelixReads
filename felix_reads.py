@@ -140,10 +140,10 @@ def run(timediff):
         'org': 'FelixReads',
         'repo': 'FelixReads.github.io',
         'xml_path': 'podcast.xml',
-        'clean_timedelta': datetime.timedelta(days=30),
+        'clean_timedelta': datetime.timedelta(years=20),
     }
     pd = PodcastRSSFeed(**podcast_args)
-    pd.remove_episodes_older_than(open(pd.download_podcast_xml()).read(), podcast_args['clean_timedelta'])
+    #pd.remove_episodes_older_than(open(pd.download_podcast_xml()).read(), podcast_args['clean_timedelta'])
     pd = PodcastXMLHandler.from_xml(pd.download_podcast_xml())
     now = datetime.datetime.now(pytz.utc)
 
